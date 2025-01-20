@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Card from "./BlogCard";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -16,15 +17,8 @@ const App = () => {
       <h1>Hello from the main page of the app!</h1>
       <p>Here are all the blogs</p>
       {blogs.map((blog) => (
-        <div key={blog.id}>Title: {blog.title}</div>
+        <Card key={blog.id} blogData={blog} />
       ))}
-      <nav>
-        <ul>
-          <li>
-            <Link to="profile">Profile page</Link>
-          </li>
-        </ul>
-      </nav>
     </div>
   );
 };
