@@ -1,6 +1,7 @@
 import App from "./App";
-import Profile from "./Profile";
+import Blog from "./SingleBlog";
 import ErrorPage from "./ErrorPage";
+import LogIn from "./auth/Log-in";
 
 const routes = [
   {
@@ -10,8 +11,16 @@ const routes = [
   },
   {
     path: "post/:postId",
-    element: <Profile />,
+    element: <Blog />,
   },
+  {
+    path: "/log-in",
+    element: <LogIn />,
+  },
+  // {
+  //   path:"/sign-in",
+
+  // }
 ];
 
 export default routes;

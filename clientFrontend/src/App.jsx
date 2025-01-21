@@ -10,11 +10,17 @@ const App = () => {
       .then((res) => setBlogs(res))
       .catch((error) => console.error(error));
   }, []);
-  console.log(blogs);
 
   return (
     <div>
       <h1>Hello from the main page of the app!</h1>
+      <Link to={"/log-in"}>
+        <button>log in</button>
+      </Link>
+
+      <Link to={"/sign-in"}>
+        <button>sign in</button>
+      </Link>
       <p>Here are all the blogs</p>
       {blogs.map((blog) => (
         <Card key={blog.id} blogData={blog} />

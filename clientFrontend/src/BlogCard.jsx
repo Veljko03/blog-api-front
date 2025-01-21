@@ -5,7 +5,7 @@ const Card = ({ blogData }) => {
     <div>
       <h3>{blogData.title}</h3>
       <p>{blogData.created_at}</p>
-      <Link to={`post/${blogData.id}`}>Profile page</Link>
+      <Link to={`post/${blogData.id}`}>Read blog</Link>
     </div>
   );
 };
