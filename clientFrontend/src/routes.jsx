@@ -2,6 +2,7 @@ import App from "./App";
 import Blog from "./SingleBlog";
 import ErrorPage from "./ErrorPage";
 import LogIn from "./auth/Log-in";
+import SignIn from "./auth/Sign-in";
 
 const routes = [
   {
@@ -17,10 +18,10 @@ const routes = [
     path: "/log-in",
     element: <LogIn />,
   },
-  // {
-  //   path:"/sign-in",
-
-  // }
+  {
+    path: "/sign-in",
+    element: <SignIn />,
+  },
 ];
 
 export default routes;
