@@ -6,6 +6,8 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
+  const [triggerReload, setTriggerReload] = useState(false);
+
   console.log(user);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const App = () => {
       .then((response) => response.json())
       .then((res) => setBlogs(res))
       .catch((error) => console.error(error));
-  }, []);
+  }, [triggerReload]);
   console.log(user);
 
   function handleLogout() {
@@ -31,6 +33,10 @@ const App = () => {
     localStorage.removeItem("user");
     setUser(null);
     setToken("");
+  }
+
+  function del() {
+    setTriggerReload((prev) => !prev);
   }
   if (token && user) {
     return (
@@ -42,7 +48,7 @@ const App = () => {
         <button onClick={handleLogout}>Logout</button>
         <p>Here are all the blogs</p>
         {blogs.map((blog) => (
-          <Card key={blog.id} blogData={blog} />
+          <Card key={blog.id} blogData={blog} onDelete={del} token={token} />
         ))}
       </div>
     );

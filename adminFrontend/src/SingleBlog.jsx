@@ -148,14 +148,14 @@ const Blog = () => {
         <button onClick={handleLike}>like/unlike</button>
         <h3>Comments:</h3>
         <br />
-        <form onSubmit={hadleCommentAdd}>
+        {/* <form onSubmit={hadleCommentAdd}>
           <textarea
             value={text}
             onChange={({ target }) => setCommentTxt(target.value)}
             placeholder="Your comment"
           ></textarea>
           <button type="submit"> Submit</button>
-        </form>
+        </form> */}
         {comments.map((comment) => (
           <div key={comment.id}>
             <br />
