@@ -9,7 +9,8 @@ const Blog = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
-  console.log(user);
+  const [text, setCommentTxt] = useState("");
+  const [triggerReload, setTriggerReload] = useState(false);
 
   useEffect(() => {
     const t = localStorage.getItem("token");
@@ -31,7 +32,7 @@ const Blog = () => {
         setNumOfLikes(res.num_of_likes);
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [triggerReload]);
 
   const handleLike = (event) => {
     event.preventDefault();
@@ -57,9 +58,6 @@ const Blog = () => {
         })
         .then((data) => {
           if (data) {
-            const a = data.num_of_likes;
-            console.log(a);
-
             setNumOfLikes(data.num_of_likes);
           } else {
             throw new Error("Login failed: no token provided");
@@ -68,8 +66,50 @@ const Blog = () => {
         .catch((err) => console.log(err));
     } else {
       alert("log in first");
+      navigate("/log-in");
     }
   };
+
+  const hadleCommentAdd = (event) => {
+    event.preventDefault();
+
+    if (token) {
+      const userID = user.id;
+      const forBody = { text, userID };
+
+      fetch(`http://localhost:3000/posts/comment/${postId}`, {
+        method: "post",
+
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(forBody),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            alert("Invalid credentials");
+            //navigate("/log-in");
+            throw new Error("Invalid credentials");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data) {
+            setCommentTxt("");
+            setTriggerReload((prev) => !prev);
+          } else {
+            throw new Error("Login failed: no token provided");
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      alert("log in first");
+      navigate("/log-in");
+    }
+  };
+
+  const handleDeleteComment = () => {};
 
   if (blog) {
     return (
@@ -82,12 +122,22 @@ const Blog = () => {
         <h4>{numOfLikes} likes</h4>
         <button onClick={handleLike}>like/unlike</button>
         <h3>Comments:</h3>
-
         <br />
+        <form onSubmit={hadleCommentAdd}>
+          <textarea
+            value={text}
+            onChange={({ target }) => setCommentTxt(target.value)}
+            placeholder="Your comment"
+          ></textarea>
+          <button type="submit"> Submit</button>
+        </form>
         {comments.map((comment) => (
           <div key={comment.id}>
             <br />
             {comment.comment_text}
+            {comment.user_id == user?.id && (
+              <button onClick={handleDeleteComment}>Delete</button>
+            )}
             <br />
           </div>
         ))}

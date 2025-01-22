@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Card from "./BlogCard";
-import { useAuth } from "./AuthContext";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
