@@ -109,7 +109,34 @@ const Blog = () => {
     }
   };
 
-  const handleDeleteComment = () => {};
+  const handleDeleteComment = (commentID) => {
+    const userID = user.id;
+    const forBody = { commentID, userID };
+    fetch(`http://localhost:3000/posts/comment/${postId}`, {
+      method: "delete",
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify(forBody),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          alert("Invalid credentials");
+          //navigate("/log-in");
+          throw new Error("Invalid credentials");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          setComments(data);
+        } else {
+          throw new Error("Login failed: no token provided");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   if (blog) {
     return (
@@ -136,7 +163,9 @@ const Blog = () => {
             <br />
             {comment.comment_text}
             {comment.user_id == user?.id && (
-              <button onClick={handleDeleteComment}>Delete</button>
+              <button onClick={() => handleDeleteComment(comment.id)}>
+                Delete
+              </button>
             )}
             <br />
           </div>
