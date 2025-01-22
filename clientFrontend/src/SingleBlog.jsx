@@ -13,13 +13,13 @@ const Blog = () => {
   const [triggerReload, setTriggerReload] = useState(false);
 
   useEffect(() => {
-    const t = localStorage.getItem("token");
-    const u = localStorage.getItem("user");
-    if (u) {
-      setUser(JSON.parse(u));
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
-    if (t) {
-      setToken(t);
+    if (storedToken) {
+      setToken(storedToken);
     }
   }, []);
 
@@ -122,8 +122,6 @@ const Blog = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          alert("Invalid credentials");
-          //navigate("/log-in");
           throw new Error("Invalid credentials");
         }
         return response.json();
