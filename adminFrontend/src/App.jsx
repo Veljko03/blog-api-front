@@ -8,8 +8,6 @@ const App = () => {
   const [token, setToken] = useState("");
   const [triggerReload, setTriggerReload] = useState(false);
 
-  console.log(user);
-
   useEffect(() => {
     const t = localStorage.getItem("token");
     const u = localStorage.getItem("user");
@@ -46,7 +44,11 @@ const App = () => {
         <h2>Here you can edit, delate and add new posts</h2>
 
         <button onClick={handleLogout}>Logout</button>
+
         <p>Here are all the blogs</p>
+        <br />
+        <Link to={"/new-blog"}>Add new blog</Link>
+        <br />
         {blogs.map((blog) => (
           <Card key={blog.id} blogData={blog} onDelete={del} token={token} />
         ))}
